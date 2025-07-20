@@ -5,6 +5,7 @@ applications:
       phases:
         preBuild:
           commands:
+            - npm ci
             - npx ng version
         build:
           commands:
