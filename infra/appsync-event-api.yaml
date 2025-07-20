@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS AppSync Event API
+
+Parameters:
+  AppName:
+    Type: String
+  AppEnvironment:
+    Type: String
+  UserPoolId:
+    Type: String
+
+Resources:
+  AppSyncEventApi:
+    Type: AWS::AppSync::GraphQLApi
+    Properties:
+      Name: !Sub "${AppName}-${AppEnvironment}-events"
+      AuthenticationType: AMAZON_COGNITO_USER_POOLS
+      UserPoolConfig:
+        UserPoolId: !Ref UserPoolId
+        AwsRegion: !Ref "AWS::Region"
+        DefaultAction: ALLOW
+      XrayEnabled: true
+
+  # Add other resources here, such as data sources, resolvers, and functions.
+
+Outputs:
+  AppSyncApiId:
+    Description: "The ID of the AppSync API"
+    Value: !GetAtt AppSyncEventApi.ApiId
+  AppSyncApiArn:
+    Description: "The ARN of the AppSync API"
+    Value: !GetAtt AppSyncEventApi.Arn
