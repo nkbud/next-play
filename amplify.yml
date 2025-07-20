@@ -1,0 +1,20 @@
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npx ng version
+        build:
+          commands:
+            - npx ng build --configuration=production
+      artifacts:
+        # Where your build outputs files
+        baseDirectory: dist/amplify-angular-template/browser
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - .npm/**/*
+          - node_modules/**/*
